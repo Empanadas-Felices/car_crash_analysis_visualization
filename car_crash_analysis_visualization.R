@@ -17,45 +17,44 @@ library(usdata)
 
 # Dado que el dataset inicial es muy grande, se procedió a agilizar el proceso de 
 # limpieza de datos, creando archivos con los datos limpios al final del proceso de limpieza. 
-# Se mantiene el código comentado con el fin de mostrar los cambios que se realizaron sobre 
-# los datos.
 
-# data <- read.csv("US_Accidents_March23.csv")
+# Obtenido de: https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents 
+data <- read.csv("US_Accidents_March23.csv")
 
-# data <- data %>% rename(Temperature = Temperature.F.)
-# data <- data %>% rename(Wind_Chill = Wind_Chill.F.)
-# data <- data %>% rename(Humidity = Humidity...)
-# data <- data %>% rename(Pressure = Pressure.in.)
-# data <- data %>% rename(Visibility = Visibility.mi.)
-# data <- data %>% rename(Wind_Speed = Wind_Speed.mph.)
-# data <- data %>% rename(Precipitation = Precipitation.in.)
+data <- data %>% rename(Temperature = Temperature.F.)
+data <- data %>% rename(Wind_Chill = Wind_Chill.F.)
+data <- data %>% rename(Humidity = Humidity...)
+data <- data %>% rename(Pressure = Pressure.in.)
+data <- data %>% rename(Visibility = Visibility.mi.)
+data <- data %>% rename(Wind_Speed = Wind_Speed.mph.)
+data <- data %>% rename(Precipitation = Precipitation.in.)
 
 # Selección de columnas deseadas
-# data <- data %>% select(Start_Time, Severity, State, Temperature, Wind_Chill, Humidity, 
-#                         Pressure, Visibility, Wind_Speed, Precipitation, 
-#                         Weather_Condition, Sunrise_Sunset)
+data <- data %>% select(Start_Time, Severity, State, Temperature, Wind_Chill, Humidity, 
+                       Pressure, Visibility, Wind_Speed, Precipitation, 
+                       Weather_Condition, Sunrise_Sunset)
 
 # Omitir las filas con NA
-# data <- na.omit(data)
+data <- na.omit(data)
 
 # Obtener los años
-# data$Start_Time <- as.Date(data$Start_Time, format = "%Y-%m-%d")
-# data$Start_Time <- format(data$Start_Time, "%Y")
-# data$Start_Time <- as.integer(data$Start_Time)
-# data <- data[data$Start_Time < 2023, ]  # 2023 is excluded since the year hasn't finished
-# data <- data %>% rename(Year = Start_Time) 
+data$Start_Time <- as.Date(data$Start_Time, format = "%Y-%m-%d")
+data$Start_Time <- format(data$Start_Time, "%Y")
+data$Start_Time <- as.integer(data$Start_Time)
+data <- data[data$Start_Time < 2023, ]  # 2023 is excluded since the year hasn't finished
+data <- data %>% rename(Year = Start_Time) 
 
-# dataMapa <- data
-# data$State <- abbr2state(data$State)
+dataMapa <- data
+data$State <- abbr2state(data$State)
 
-# state_counts <- dataMapa %>%
-#  group_by(State, Year) %>%
-#  summarise(Count = n())
+state_counts <- dataMapa %>%
+group_by(State, Year) %>%
+summarise(Count = n())
 
 
 # Para guardar los cambios iniciales
-# write.csv(data, file = "archivoLimpioEstados.csv", row.names = FALSE)
-# write.csv(state_counts, file = "archivoMapa.csv", row.names = FALSE)
+write.csv(data, file = "archivoLimpioEstados.csv", row.names = FALSE)
+write.csv(state_counts, file = "archivoMapa.csv", row.names = FALSE)
 
 
 dataUnidades <- data.frame(
